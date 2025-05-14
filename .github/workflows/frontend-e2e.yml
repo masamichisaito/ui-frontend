@@ -26,8 +26,8 @@ jobs:
       - name: Wait for port to fully initialize
         run: sleep 2
 
-      - name: Wait for servers
-        run: npx wait-on --http-get http://localhost:5173 http://localhost:3000
+      - name: Wait for ports
+        run: npx wait-on tcp:5173 tcp:3000
 
       - name: Run Cypress
         run: npx cypress run
