@@ -20,6 +20,9 @@ jobs:
           npm ci
           npm run dev &
 
+      - name: Install frontend dependencies
+        run: npm ci
+
       - name: Start frontend
         run: npm run dev &
 
