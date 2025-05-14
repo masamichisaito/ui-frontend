@@ -7,30 +7,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # フロントエンドのチェックアウト
       - name: Checkout frontend
         uses: actions/checkout@v3
 
+      # バックエンドのチェックアウト
       - name: Checkout backend
         run: |
           git clone https://github.com/masamichisaito/api-backend.git ../api-backend
 
-      - name: Setup backend
+      # バックエンドのセットアップと起動（本番モードで安定）
+      - name: Setup and start backend
         run: |
           cd ../api-backend
           npm ci
-          npm run dev &
+          npm run build
+          npm start &
+          npx wait-on http://localhost:3000
 
+      # フロントエンドのセットアップと起動（環境変数を明示的に指定）
       - name: Install frontend dependencies
         run: npm ci
 
       - name: Start frontend
-        run: npm run dev &
+        env:
+          VITE_API_URL: http://localhost:3000 # ← 明示的に環境変数をセット
+        run: |
+          npm run dev &
+          npx wait-on http://localhost:5173
 
-      - name: Wait for port to fully initialize
-        run: sleep 2
-
-      - name: Wait for ports
-        run: npx wait-on tcp:5173 tcp:3000
-
+      # CypressのE2Eテスト実行（環境変数設定）
       - name: Run Cypress
-        run: npx cypress run
+        env:
+          CYPRESS_API_URL: http://localhost:3000
+        run: |
+          npx cypress run
