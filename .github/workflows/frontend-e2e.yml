@@ -1,0 +1,32 @@
+name: frontend-e2e
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout frontend
+        uses: actions/checkout@v3
+
+      - name: Checkout backend
+        run: |
+          git clone https://github.com/masamichisaito/api-backend.git ../api-backend
+
+      - name: Setup backend
+        run: |
+          cd ../api-backend
+          npm ci
+          npm run dev &
+
+      - name: Setup frontend
+        run: |
+          npm ci
+          npm run dev &
+
+      - name: Wait for servers
+        run: npx wait-on http://localhost:5173 http://localhost:3000
+
+      - name: Run Cypress
+        run: npx cypress run
