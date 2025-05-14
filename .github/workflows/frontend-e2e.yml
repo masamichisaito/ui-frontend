@@ -20,10 +20,11 @@ jobs:
           npm ci
           npm run dev &
 
-      - name: Setup frontend
-        run: |
-          npm ci
-          npm run dev &
+      - name: Start frontend
+        run: npm run dev &
+
+      - name: Wait for port to fully initialize
+        run: sleep 2
 
       - name: Wait for servers
         run: npx wait-on --http-get http://localhost:5173 http://localhost:3000
