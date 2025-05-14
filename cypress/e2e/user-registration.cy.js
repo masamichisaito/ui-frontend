@@ -11,6 +11,6 @@ describe('ユーザー登録フロー', () => {
     cy.contains('メール: test@example.com');
 
     cy.contains('登録').click();
-    cy.contains('登録完了');
+    cy.contains('登録完了', { timeout: 10000 }).should('be.visible'); 
   });
 });
