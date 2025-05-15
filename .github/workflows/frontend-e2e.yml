@@ -43,6 +43,9 @@ jobs:
           nohup npm run dev > frontend.log 2>&1 &
           npx wait-on http://localhost:5173
 
+      - name: Show backend log again
+        run: cat ../api-backend/backend.log || echo "(no log found)"
+
       - name: Run Cypress
         env:
           CYPRESS_API_URL: http://localhost:3000
