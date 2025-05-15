@@ -46,10 +46,21 @@ jobs:
       - name: Show backend log again
         run: cat ../api-backend/backend.log || echo "(no log found)"
 
+      - name: Show backend log again
+        run: |
+          echo "====== backend.log ======"
+          cat ../api-backend/backend.log || echo "ログがありません"
+
+      - name: Show frontend log
+        run: |
+          echo "====== frontend.log ======"
+          cat frontend.log || echo "ログがありません"
+
       - name: Run Cypress
         env:
           CYPRESS_API_URL: http://localhost:3000
         run: npx cypress run
+
 
       - name: Show backend log again
         run: |
