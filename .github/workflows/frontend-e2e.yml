@@ -19,8 +19,19 @@ jobs:
           cd ../api-backend
           npm ci
           npm install wait-on
-          node app.js &  # ← pm2をやめて、nodeで直接バックグラウンド起動
-          npx wait-on http://localhost:3000
+
+          echo "🚀 Starting backend..."
+          nohup node app.js > backend.log 2>&1 &
+          sleep 5
+
+          echo "📄 backend.log output:"
+          cat backend.log || echo "(log file not found)"
+
+          echo "🌐 Testing if backend is up..."
+          curl -I http://localhost:3000 || echo "❌ Backend not responding!"
+
+          echo "⏳ Waiting for backend to be ready..."
+          npx wait-on http://localhost:3000 --timeout=15000
 
       - name: Install frontend dependencies
         run: npm ci
