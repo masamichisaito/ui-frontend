@@ -50,3 +50,8 @@ jobs:
         env:
           CYPRESS_API_URL: http://localhost:3000
         run: npx cypress run
+
+      - name: Show backend log again
+        run: |
+          echo "====== backend.log ======"
+          cat ../api-backend/backend.log || echo "ログがありません"
