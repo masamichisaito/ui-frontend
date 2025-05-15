@@ -1,3 +1,4 @@
+console.log('[confirm.js] スクリプト読み込み開始');
 const API_URL = window.API_URL || 'http://localhost:3000';
 console.log('API_URL:', API_URL);
 const data = JSON.parse(localStorage.getItem('tempUser'));
