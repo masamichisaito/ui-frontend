@@ -31,7 +31,7 @@ jobs:
           curl -I http://localhost:3000 || echo "❌ Backend not responding!"
 
           echo "⏳ Waiting for backend to be ready..."
-          npx wait-on http://localhost:3000 --timeout=15000
+          npx wait-on tcp:3000 --timeout=15000
 
       - name: Install frontend dependencies
         run: npm ci
