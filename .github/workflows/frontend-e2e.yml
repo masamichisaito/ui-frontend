@@ -14,22 +14,24 @@ jobs:
         run: |
           git clone https://github.com/masamichisaito/api-backend.git ../api-backend
 
+      # 🔑 変更①：バックエンドをpm2で安定起動（ここが重要！）
       - name: Setup backend
         run: |
           cd ../api-backend
           npm ci
-          npm install wait-on # ← wait-onを事前にインストール
-          node app.js &       # ← nodemonではなくnodeで起動
+          npm install pm2 wait-on
+          npx pm2 start app.js
           npx wait-on http://localhost:3000
 
       - name: Install frontend dependencies
         run: npm ci
 
+      # 🔑 変更②：フロントエンド起動の出力を抑えて安定化
       - name: Start frontend
         env:
           VITE_API_URL: http://localhost:3000
         run: |
-          npm run dev &
+          npm run dev > /dev/null 2>&1 &
           npx wait-on http://localhost:5173
 
       - name: Run Cypress
