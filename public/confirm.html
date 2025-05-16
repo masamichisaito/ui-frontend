@@ -1,16 +1,16 @@
+<!-- public/confirm.html -->
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8" /><title>確認</title>
-  <!-- confirm.html の <head> 内などに追加 -->
-<script>
-  window.API_URL = 'http://localhost:3000';
-</script>
+<head>
+  <meta charset="UTF-8">
+  <title>確認画面</title>
 </head>
 <body>
   <h1>確認画面</h1>
   <div id="confirmArea"></div>
   <button id="submitBtn">登録</button>
-  <!-- public/confirm.html の中 -->
-<script type="module" src="/src/js/confirm.js"></script>
+
+  <!-- public 以下なので /src/js/confirm.js で読みに行く -->
+  <script type="module" src="/src/js/confirm.js"></script>
 </body>
 </html>
