@@ -37,22 +37,29 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   submitBtn.onclick = async () => {
+    console.log('▶ 登録ボタン押されました');
+
     try {
       const res = await fetch(`${API_URL}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+
+      console.log('📡 fetch完了 status:', res.status);
+
       if (res.ok) {
+        console.log('✅ 登録成功、完了画面へ遷移');
         localStorage.removeItem('tempUser');
         location.href = './complete.html';
       } else {
         const err = await res.text();
+        console.error('❌ 登録失敗:', err);
         alert('登録失敗: ' + err);
       }
     } catch (e) {
+      console.error('💥 通信エラー:', e);
       alert('通信エラー');
-      console.error(e);
     }
   };
 });
